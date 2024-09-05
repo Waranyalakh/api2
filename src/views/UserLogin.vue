@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h1>Web API</h1> 
+        <h1>Web API</h1>
         <!-- ฟอร์มสำหรับการเข้าสู่ระบบ -->
         <form @submit.prevent="handleSubmit" class="login-form">
             <div>
-                <label for="email">Username: </label>
+                <label for="username">Username: </label>
                 <input type="text" v-model="email" required>
             </div><br>
             <div>
@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import '../assets/style.css'; // นำเข้าไฟล์สไตล์จากโฟลเดอร์ assets
+import '../assets/style.css';
 import { useRouter } from 'vue-router';
-import { ref, onMounted } from ' vue';
+import { ref } from 'vue';
 
 export default {
     setup() {
@@ -29,32 +29,7 @@ export default {
         const errorMessage = ref('');
         const router = useRouter();
 
-        // ตรวจสอบ token เมื่อคอมโพเนนต์ถูก mount
-        onMounted(async () => {
-            const token = localStorage.getItem('token');
-            
-            if (token) {
-                try {
-                    const response = await fetch('http://localhost:5246/api/Auth/login', {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        console.log("Access to protected endpoint successful");
-                        // สามารถจัดการกับข้อมูลที่ได้จาก response ได้ที่นี่
-                    } else {
-                        console.error("Access denied");
-                        // อาจต้องจัดการ token ที่ไม่ถูกต้องหรือหมดอายุ
-                    }
-                } catch (error) {
-                    console.error("Error while accessing protected endpoint:", error);
-                }
-            }
-        });
-
+        // ฟังก์ชันสำหรับจัดการการเข้าสู่ระบบ
         const handleSubmit = async () => {
             try {
                 // ส่งคำขอ POST ไปยัง backend เพื่อทำการเข้าสู่ระบบ
@@ -64,7 +39,7 @@ export default {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        UserName: email.value,  // ใช้ email เป็น UserName
+                        UserName: email.value, // ใช้ email เป็น UserName
                         PassWord: password.value // ใช้ password ที่กรอกในฟอร์ม
                     })
                 });
@@ -73,15 +48,17 @@ export default {
                 if (response.ok) {
                     const data = await response.json();
                     // แสดงข้อมูลทั้งหมดที่ได้รับใน console
-                    console.log("Received data:", data); 
+                    console.log("Received data:", data);
                     // เก็บ JWT token ใน localStorage
                     localStorage.setItem('token', data.token);
                     // เปลี่ยนเส้นทางไปที่หน้าผู้ใช้
                     router.push('/UserPage');
                 } else {
+                    // แสดงข้อความข้อผิดพลาดหากชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
                     errorMessage.value = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
                 }
             } catch (error) {
+                // แสดงข้อความข้อผิดพลาดเมื่อมีปัญหาในการเชื่อมต่อกับ backend
                 errorMessage.value = 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ';
             }
         };
