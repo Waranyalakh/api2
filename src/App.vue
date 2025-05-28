@@ -1,36 +1,39 @@
 <template>
-  <nav>
-    <!-- <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>| -->
-     <router-link to="/login">login</router-link> 
-    
-  </nav>
-  <router-view/>
+    <nav>
+       
+        <router-link to="/login">Login</router-link>
+    </nav>
 
+    <!--<button @click="goToLogin">Go to Login</button>
+    <button @click="gotohome">Go to Home</button>-->
+
+    <router-view />
 </template>
+
 <script>
-import './assets/style.css' //import style form assets folder
+    import './assets/style.css'
+    import { useRouter } from 'vue-router'
 
-import { useRouter } from 'vue-router'; //import router
-export default {
- components:{
+    export default {
+        setup() {
+            const router = useRouter()
 
- },
-  setup() {
-    const router = useRouter();
-    const goToLogin = () => {
-      router.push('/login'); // เปลี่ยนเส้นทางไปยัง /login
-    };
-    const gotohome = () =>{
-      router.push('/UserPage')
+            const goToLogin = () => {
+                router.push('/login')
+            }
+
+            const gotohome = () => {
+                router.push('/UserPage')
+            }
+
+            return {
+                goToLogin,
+                gotohome
+            }
+        }
     }
-    return{
-      goToLogin,
-      gotohome
-    }
-  },
-}
 </script>
-<style>
 
+<style>
+    /* ใส่สไตล์ตามต้องการ */
 </style>

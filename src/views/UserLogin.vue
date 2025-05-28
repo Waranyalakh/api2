@@ -21,8 +21,10 @@
 import '../assets/style.css';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import axios from 'axios';
 
-export default {
+
+    export default {
     setup() {
         const email = ref('');
         const password = ref('');
@@ -32,36 +34,24 @@ export default {
         // ฟังก์ชันสำหรับจัดการการเข้าสู่ระบบ
         const handleSubmit = async () => {
             try {
-                // ส่งคำขอ POST ไปยัง backend เพื่อทำการเข้าสู่ระบบ
-                const response = await fetch('http://localhost:5246/api/Auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        UserName: email.value, // ใช้ email เป็น UserName
-                        PassWord: password.value // ใช้ password ที่กรอกในฟอร์ม
-                    })
+                const response = await axios.post('https://localhost:7263/api/Auth/login', {
+                    UserName: email.value,
+                    PassWord: password.value
                 });
 
-                // ตรวจสอบสถานะการตอบกลับ
-                if (response.ok) {
-                    const data = await response.json();
-                    // แสดงข้อมูลทั้งหมดที่ได้รับใน console
-                    console.log("Received data:", data);
-                    // เก็บ JWT token ใน localStorage
-                    localStorage.setItem('token', data.token);
-                    // เปลี่ยนเส้นทางไปที่หน้าผู้ใช้
-                    router.push('/UserPage');
-                } else {
-                    // แสดงข้อความข้อผิดพลาดหากชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
-                    errorMessage.value = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
-                }
+                console.log("Received data:", response.data);
+                localStorage.setItem('token', response.data.token);
+                router.push('/UserPage');
             } catch (error) {
-                // แสดงข้อความข้อผิดพลาดเมื่อมีปัญหาในการเชื่อมต่อกับ backend
-                errorMessage.value = 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ';
+                if (error.response && error.response.status === 401) {
+                    errorMessage.value = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+                } else {
+                    errorMessage.value = 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ';
+                    console.error(error);
+                }
             }
         };
+
 
         return {
             email,

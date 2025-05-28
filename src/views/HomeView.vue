@@ -1,9 +1,9 @@
 <template>
   <div class="home">
  
-
-    <Login/>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/>  -->
+      
+    <!--<Login/>-->
+     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->  
   </div>
 </template>
 
