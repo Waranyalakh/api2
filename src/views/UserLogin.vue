@@ -19,6 +19,7 @@
 </template>
 
 <script>
+
 import "../assets/style.css";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
@@ -35,16 +36,7 @@ export default {
     const handleSubmit = async () => {
       try {
         // ส่งคำขอ POST ไปยัง backend เพื่อทำการเข้าสู่ระบบ
-        // const response = await fetch("https://localhost:7263/api/Auth/login", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     userName: username.value, // ใช้ email เป็น UserName
-        //     passWord: password.value, // ใช้ password ที่กรอกในฟอร์ม
-        //   }),
-        // });
+       
 
         const res = axios.post(
           "https://localhost:7263/api/Auth/login",
@@ -87,6 +79,51 @@ export default {
     };
   },
 };
+// =---
+// import '../assets/style.css';
+// import { useRouter } from 'vue-router';
+// import { ref } from 'vue';
+// import axios from 'axios';
+
+
+//     export default {
+//     setup() {
+//         const email = ref('');
+//         const password = ref('');
+//         const errorMessage = ref('');
+//         const router = useRouter();
+
+//         // ฟังก์ชันสำหรับจัดการการเข้าสู่ระบบ
+//         const handleSubmit = async () => {
+//             try {
+//                 const response = await axios.post('https://localhost:7263/api/Auth/login', {
+//                     UserName: email.value,
+//                     PassWord: password.value
+//                 });
+
+//                 console.log("Received data:", response.data);
+//                 localStorage.setItem('token', response.data.token);
+//                 router.push('/UserPage');
+//             } catch (error) {
+//                 if (error.response && error.response.status === 401) {
+//                     errorMessage.value = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+//                 } else {
+//                     errorMessage.value = 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ';
+//                     console.error(error);
+//                 }
+//             }
+//         };
+
+
+//         return {
+//             email,
+//             password,
+//             errorMessage,
+//             handleSubmit
+//         };
+//     }
+// }
+
 </script>
 
 <style>

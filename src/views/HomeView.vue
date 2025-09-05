@@ -1,10 +1,15 @@
 <template>
-  <div>
+
+
     <h1>Welcome</h1>
     
 
    
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/>  -->
+
+  <div class="home">
+ 
+      
+
   </div>
 </template>
 

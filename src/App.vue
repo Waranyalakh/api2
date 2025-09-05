@@ -1,12 +1,26 @@
 <template>
+
   <nav>
     <!-- <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>| -->
     <!-- <router-link to="/login">login</router-link> -->
   </nav>
   <router-view />
+=======
+    <nav>
+       
+        <router-link to="/login">Login</router-link>
+    </nav>
+
+    <!--<button @click="goToLogin">Go to Login</button>
+    <button @click="gotohome">Go to Home</button>-->
+
+    <router-view />
+
 </template>
+
 <script>
+
 import "./assets/style.css"; //import style form assets folder
 
 import { useRouter } from "vue-router"; //import router
@@ -32,5 +46,4 @@ export default {
   },
 };
 </script>
-<style>
-</style>
+
