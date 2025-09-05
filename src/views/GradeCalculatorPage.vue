@@ -3,40 +3,48 @@
     <h1>Calculate Grade</h1>
 
     <!-- คำนวณเกรดจากคะแนน -->
-    <div>
-      <label for="score">Enter Score:</label>
-      <input
-        v-model.number="score"
-        id="score"
-        type="number"
-        placeholder="Enter score"
-      />
-      <button @click="fetchGrade">Get Grade</button>
-    </div>
-    <div v-if="gradeResult && gradeResult.Grade">
-      <h2>Grade: {{ gradeResult.Grade }}</h2> 
-      <!-- h2 not show -->
-    </div>
-    <div v-if="gradeError" style="color: red">
-      <p>{{ gradeError }}</p>
-      <!-- p not show -->
+    <div class="Num-socre-container">
+      <div>
+        <label for="score">Enter Score:</label>
+        <input
+          v-model.number="score"
+          id="score"
+          type="number"
+          placeholder="Enter score"
+        />
+        <button @click="fetchGrade">Get Grade</button>
+      </div>
+      <div v-if="gradeResult && gradeResult.grade">
+        <h2>Grade: {{ gradeResult.grade }}</h2>
+      </div>
+      <div v-if="gradeError" style="color: red">
+        <p>{{ gradeError }}</p>
+      </div>
     </div>
 
     <!-- แสดงช่วงคะแนนสำหรับเกรด -->
-    <div>
-      <label for="grade">Enter Grade:</label>
-      <input v-model="grade" id="grade" type="text" placeholder="Enter grade" />
-      <button @click="fetchScoreRange">Get Score Range</button>
-    </div>
-    <div
-      v-if="rangeResult && rangeResult.Calculate && rangeResult.Calculate.Grade"
-    >
-      <h3>Score Range for Grade {{ rangeResult.Calculate.Grade }}:</h3>
-      <p>{{ rangeResult.Message }}</p>
-    </div>
+    <div class="text-score-container">
+      <div>
+        <label for="grade">Enter Grade:</label>
+        <input
+          v-model="grade"
+          id="grade"
+          type="text"
+          placeholder="Enter grade"
+        />
+        <button @click="fetchScoreRange">Get Score Range</button>
+      </div>
+      <div v-if="rangeResult">
+        <h2>
+          Score Range for Grade
+          {{ rangeResult.Calculate?.Grade || rangeResult.grade }}
+        </h2>
+        <p>{{ rangeResult.Message || rangeResult.message }}</p>
+      </div>
 
-    <div v-if="rangeError" style="color: red">
-      <p>{{ rangeError }}</p>
+      <div v-if="rangeError" style="color: red">
+        <p>{{ rangeError }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -93,6 +101,12 @@ export default {
 
 <style scoped>
 /* เพิ่มสไตล์สำหรับ error */
+/* * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+} */
+ 
 p {
   margin: 0;
 }
@@ -100,5 +114,19 @@ p {
 h2,
 h3 {
   margin-top: 20px;
+}
+.Num-socre-container {
+  background-color: aquamarine;
+  padding: 40px;
+  border-radius: 10px;
+}
+.text-score-container {
+  background-color: cadetblue;
+  padding: 40px;
+  margin-top: 30px;
+  border-radius: 10px;
+}
+.error-message  {
+  color: red;
 }
 </style>

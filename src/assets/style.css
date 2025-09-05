@@ -44,9 +44,6 @@
   }
 
   /* สไตล์พื้นฐานสำหรับ nav และปุ่ม */
-nav {
-  margin-bottom: 20px;
-}
 
 .btn {
   display: inline-block;

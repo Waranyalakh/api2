@@ -31,14 +31,12 @@ export default {
     const password = ref("");
     const errorMessage = ref("");
     const router = useRouter();
-
+  
     // ฟังก์ชันสำหรับจัดการการเข้าสู่ระบบ
     const handleSubmit = async () => {
       try {
         // ส่งคำขอ POST ไปยัง backend เพื่อทำการเข้าสู่ระบบ
-       
-
-        const res = axios.post(
+        const response = await axios.post(
           "https://localhost:7263/api/Auth/login",
           {
             userName: username.value, // ใช้ email เป็น UserName
@@ -51,14 +49,12 @@ export default {
           }
         );
 
-        console.log(res);
         // ตรวจสอบสถานะการตอบกลับ
-        if (response.ok) {
-          const data = await response.json();
+        if (response.data && response.data.token) {
           // แสดงข้อมูลทั้งหมดที่ได้รับใน console
-          console.log("Received data:", data);
+          console.log("Received data:", response.data);
           // เก็บ JWT token ใน localStorage
-          localStorage.setItem("token", data.token);
+          localStorage.setItem("token", response.data.token);
           // เปลี่ยนเส้นทางไปที่หน้าผู้ใช้
           router.push("/UserPage");
         } else {
@@ -79,50 +75,6 @@ export default {
     };
   },
 };
-// =---
-// import '../assets/style.css';
-// import { useRouter } from 'vue-router';
-// import { ref } from 'vue';
-// import axios from 'axios';
-
-
-//     export default {
-//     setup() {
-//         const email = ref('');
-//         const password = ref('');
-//         const errorMessage = ref('');
-//         const router = useRouter();
-
-//         // ฟังก์ชันสำหรับจัดการการเข้าสู่ระบบ
-//         const handleSubmit = async () => {
-//             try {
-//                 const response = await axios.post('https://localhost:7263/api/Auth/login', {
-//                     UserName: email.value,
-//                     PassWord: password.value
-//                 });
-
-//                 console.log("Received data:", response.data);
-//                 localStorage.setItem('token', response.data.token);
-//                 router.push('/UserPage');
-//             } catch (error) {
-//                 if (error.response && error.response.status === 401) {
-//                     errorMessage.value = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
-//                 } else {
-//                     errorMessage.value = 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ';
-//                     console.error(error);
-//                 }
-//             }
-//         };
-
-
-//         return {
-//             email,
-//             password,
-//             errorMessage,
-//             handleSubmit
-//         };
-//     }
-// }
 
 </script>
 
