@@ -2,28 +2,35 @@
 <!-- homepage fpr dispaly button user and item for go that page -->
 <template>
   <div>
-      <h1>Web API</h1>
-      <button @click="goToUserPage">User</button> <!-- เพิ่ม @click สำหรับการจัดการการคลิก -->
+    <h1>Web API</h1>
+    <button @click="goToUserPage">User</button>
+    <!-- เพิ่ม @click สำหรับการจัดการการคลิก -->
+    <button @click="gotoGradeCalculatorPage">Cal Grade</button>
   </div>
 </template>
 
 <script>
-import '../assets/style.css'
-import { useRouter } from 'vue-router'; // นำเข้า useRouter จาก vue-router
+import "../assets/style.css";
+import { useRouter } from "vue-router"; // นำเข้า useRouter จาก vue-router
 
 export default {
-name: 'HomePage',
-setup() {
-  const router = useRouter(); // สร้างอินสแตนซ์ของ useRouter
+  name: "HomePage",
+  setup() {
+    const router = useRouter(); // สร้างอินสแตนซ์ของ useRouter
 
-  const goToUserPage = () => {
-    router.push('/User'); // เปลี่ยนเส้นทางไปยัง /UserPage เมื่อกดปุ่ม
-  };
+    const goToUserPage = () => {
+      router.push("/User"); // เปลี่ยนเส้นทางไปยัง /UserPage เมื่อกดปุ่ม
+    };
 
-  return {
-    goToUserPage
-  };
-},
+    const gotoGradeCalculatorPage = () => {
+      router.push("/GradeCalculatorPage"); //เปลี่ยนเส้นทางไปที่ /GradeCalculatorPage เมื่อมีการกดปุ่ม
+    };
+
+    return {
+      goToUserPage,
+      gotoGradeCalculatorPage,
+    };
+  },
 };
 </script>
 

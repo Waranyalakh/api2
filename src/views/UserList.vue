@@ -67,7 +67,7 @@ export default {
   methods: {
     fetchUsers() {
       axios
-        .get("http://localhost:5246/api/User",{headers:{ 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImp0aSI6ImRiODk2ZDFmLWQzNzUtNDQyMi05NTc2LTdiMDlmYjU3NmI1YyIsImV4cCI6MTcyNTM0MjA5NSwiaXNzIjoiWW91cklzc3VlciIsImF1ZCI6IllvdXJBdWRpZW5jZSJ9.FBNJNq9120u3v_hjJlmYcioa9AD42RLs-J90doh7bJc'}})
+        .get("https://localhost:7263/api/User",{headers:{ 'Authorization':'Bearer ' +localStorage.getItem('token')}})
         .then((response) => {
           this.users = response.data;
         })
@@ -82,7 +82,7 @@ export default {
       }
 
       axios
-        .post("http://localhost:5246/api/User", this.newUser)
+        .post("https://localhost:7263/api/User", this.newUser,{headers:{ 'Authorization':'Bearer ' +localStorage.getItem('token')}})
         .then((response) => {
           console.log("User added successfully:", response.data);
           this.users.push(response.data);
@@ -103,8 +103,8 @@ export default {
 
       axios
         .put(
-          `http://localhost:5246/api/User/${this.editingUser.id}`,
-          this.editingUser
+          `https://localhost:7263/api/User/${this.editingUser.id}`,
+          this.editingUser,{headers:{ 'Authorization':'Bearer ' +localStorage.getItem('token')}}
         )
         .then((response) => {
           console.log("User updated successfully:", response.data);
@@ -126,7 +126,7 @@ export default {
     deleteUser(id) {
       if (confirm("คุณแน่ใจหรือว่าต้องการลบผู้ใช้นี้?")) {
         axios
-          .delete(`http://localhost:5246/api/User/${id}`)
+          .delete(`https://localhost:7263/api/User/${id}`,{headers:{ 'Authorization':'Bearer ' +localStorage.getItem('token')}})
           .then(() => {
             console.log("User deleted successfully");
             this.users = this.users.filter((user) => user.id !== id); // Remove the user from the list
@@ -149,7 +149,7 @@ export default {
       }
 
       axios
-        .get(`http://localhost:5246/api/User/${this.fetchUserId}`)
+        .get(`https://localhost:7263/api/User/${this.fetchUserId}`,{headers:{ 'Authorization':'Bearer ' +localStorage.getItem('token')}})
         .then((response) => {
           this.fetchedUser = response.data; // Store the fetched user details
         })
