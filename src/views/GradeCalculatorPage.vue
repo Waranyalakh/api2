@@ -47,55 +47,61 @@
       </div>
     </div>
   </div>
+  <div>
+    <div>
+      <button @click="gotohomepage">Back</button>
+    </div>
+  </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import axios from "axios";
 
 const API_URL1 = "https://localhost:7263/api/CalculateGrade/Calculate";
 const API_URL2 = "https://localhost:7263/api/CalculateGrade/ScoreRange";
 
-export default {
-  name: "CalculateGradePage",
-  data() {
-    return {
-      score: null,
-      grade: "",
-      gradeResult: null,
-      rangeResult: null,
-      gradeError: null, // เพิ่มตัวแปรจัดการ error ของเกรด
-      rangeError: null, // เพิ่มตัวแปรจัดการ error ของช่วงคะแนน
-    };
-  },
-  methods: {
-    async fetchGrade() {
-      this.gradeError = null; // ล้างค่า error ก่อน
-      try {
-        const response = await axios.get(API_URL1, {
-          params: { score: this.score },
-        });
-        console.log("Grade API Response:", response.data); // ตรวจสอบผลลัพธ์จาก API
-        this.gradeResult = response.data;
-      } catch (error) {
-        console.log("Error fetching grade:", error);
-        this.gradeError = "Error fetching grade. Please check your input.";
-      }
-    },
-    async fetchScoreRange() {
-      this.rangeError = null; // ล้างค่า error ก่อน
-      try {
-        const response = await axios.get(API_URL2, {
-          params: { grade: this.grade },
-        });
-        console.log("Score Range API Response:", response.data); // ตรวจสอบผลลัพธ์จาก API
-        this.rangeResult = response.data;
-      } catch (error) {
-        console.error("Error fetching score range:", error);
-        this.rangeError =
-          "Error fetching score range. Please check your input.";
-      }
-    },
-  },
+const router = useRouter();
+
+const score = ref(null);
+const grade = ref("");
+const gradeResult = ref(null);
+const rangeResult = ref(null);
+const gradeError = ref(null);
+const rangeError = ref(null);
+
+// methods
+const gotohomepage = () => {
+  router.push("/UserPage");
+};
+
+const fetchGrade = async () => {
+  gradeError.value = null;
+  try {
+    const response = await axios.get(API_URL1, {
+      params: { score: score.value },
+    });
+    console.log("Grade API Response:", response.data);
+    gradeResult.value = response.data;
+  } catch (error) {
+    console.log("Error fetching grade:", error);
+    gradeError.value = "Error fetching grade. Please check your input.";
+  }
+};
+
+const fetchScoreRange = async () => {
+  rangeError.value = null;
+  try {
+    const response = await axios.get(API_URL2, {
+      params: { grade: grade.value },
+    });
+    console.log("Score Range API Response:", response.data);
+    rangeResult.value = response.data;
+  } catch (error) {
+    console.error("Error fetching score range:", error);
+    rangeError.value = "Error fetching score range. Please check your input.";
+  }
 };
 </script>
 
@@ -106,7 +112,9 @@ export default {
   margin: 0;
   box-sizing: border-box;
 } */
- 
+* {
+  margin-top: 20px;
+}
 p {
   margin: 0;
 }
@@ -115,7 +123,7 @@ h2,
 h3 {
   margin-top: 20px;
 }
-.Num-socre-container {
+/* .Num-socre-container {
   background-color: aquamarine;
   padding: 40px;
   border-radius: 10px;
@@ -125,8 +133,8 @@ h3 {
   padding: 40px;
   margin-top: 30px;
   border-radius: 10px;
-}
-.error-message  {
+} */
+.error-message {
   color: red;
 }
 </style>
