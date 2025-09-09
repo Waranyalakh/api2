@@ -30,6 +30,11 @@ const routes = [
     name: 'GradeCalculatorPage',
     component: () => import('../views/GradeCalculatorPage.vue')
   },
+  {
+    path: '/ItemPage',
+    name: 'ItemPage',
+    component: () => import('../views/itemPage.vue')
+  }
 ]
 
 const router = createRouter({

@@ -14,7 +14,7 @@
         <span class="user-name">Name: {{ user.name }}</span>
 
         <!-- Edit and Delete Buttons -->
-        <button @click="editUser(user)">Edit</button>
+        <button class="btn-Edit" @click="editUser(user)">Edit</button>
         <button class="btn-Delete" @click="deleteUser(user.id)">Delete</button>
       </li>
     </ul>
@@ -41,12 +41,16 @@
       <p>Name: {{ fetchedUser.name }}</p>
     </div>
   </div>
+  <div>
+    <button @click="gotohomepage">Back</button>
+  </div>
 </template>
 
 <script>
 import '../assets/style.css' //import style from assets folder
-
+import { useRouter } from 'vue-router'; //import library useRouter
 import axios from "axios"; //import library axios
+import router from "@/router";
 
 export default {
   name: 'UserPage',
@@ -59,12 +63,18 @@ export default {
       editingUser: null, // To track the user being edited
       fetchUserId: "", // ID to fetch user by
       fetchedUser: null, // Fetched user details
+      useRouter,
     };
   },
   mounted() {
     this.fetchUsers();
   },
   methods: {
+    // back to homepage
+    gotohomepage() {
+      router.push("/UserPage");
+    },
+
     fetchUsers() {
       axios
         .get("https://localhost:7263/api/User",{headers:{ 'Authorization':'Bearer ' +localStorage.getItem('token')}})

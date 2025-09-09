@@ -6,6 +6,7 @@
     <button @click="goToUserPage">User</button>
     <!-- เพิ่ม @click สำหรับการจัดการการคลิก -->
     <button @click="gotoGradeCalculatorPage">Cal Grade</button>
+    <button @click="goToItemPage">item</button>
   </div>
 </template>
 
@@ -26,9 +27,14 @@ export default {
       router.push("/GradeCalculatorPage"); //เปลี่ยนเส้นทางไปที่ /GradeCalculatorPage เมื่อมีการกดปุ่ม
     };
 
+    const goToItemPage = () => {
+      router.push("/ItemPage"); // เปลี่ยนเส้นทางไปยัง /ItemPage เมื่อกดปุ่ม
+    };
+
     return {
       goToUserPage,
       gotoGradeCalculatorPage,
+      goToItemPage,
     };
   },
 };

@@ -36,6 +36,9 @@
     margin-left: 20px;
     margin-top: 10px;
   }
+  .btn-Edit{
+    background-color: orange;
+  }
   .btn-Delete{
     background-color: red;
   }
